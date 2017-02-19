@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   def self.create_with_auth_and_hash(authentication, auth_hash)
     # byebug
     user = User.create!(first_name: auth_hash["info"]["name"], email: auth_hash["extra"]["raw_info"]["email"],:password => auth_hash['uid'])
-    # user.password = "888888000"
+    
     # byebug
     user.authentications << (authentication)
 

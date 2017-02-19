@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
 
   resources :users
-  #resources :sessions, only: [:create]
+  #resources :sessions, only: [:create, :new]
+  resources :password_resets, only: [:new, :create, :edit, :update]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   # these routes are for showing users a login form, logging them in, and logging them out.
@@ -13,9 +14,9 @@ Rails.application.routes.draw do
   post '/users' => 'users#create'
 
 
-
+  root 'welcome#index'
   # You can have the root of your site routed with "root"
-  root 'sessions#new'
+  #root 'sessions#new'
 
   get "/auth/:provider/callback" => "sessions#create_from_omniauth"
 
