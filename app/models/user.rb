@@ -1,5 +1,11 @@
 class User < ActiveRecord::Base
+  # you can also explicitly define enum as:  enum access_level: [:user => 0, :website_admin => 1, :super_admin => 2}
+  enum access_level: [:user, :website_admin, :super_admin]
+  # after_initialize :set_default_access_level, :if => :new_record?
   has_many :authentications, :dependent => :destroy
+  has_many :comments, :dependent => :destroy
+  has_many :searches
+
   has_secure_password
   validates :email, presence: true, uniqueness: true,
   format: {
@@ -8,6 +14,9 @@ class User < ActiveRecord::Base
 
   before_save :downcase_email
 
+  # def set_default_access_level
+  #   self.access_level ||= :user
+  # end
 
   def self.create_with_auth_and_hash(authentication, auth_hash)
     # byebug

@@ -2,5 +2,11 @@
 
 <%= render 'form' %>
 
+ <%= form_for(@user) do |f| %>
+
+    <%= f.submit "Update" %>
+ 
+<% end %>
+
 <%= link_to 'Show', @user %> |
 <%= link_to 'Back', users_path %>

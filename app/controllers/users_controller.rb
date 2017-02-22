@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
-  #before_action :require_user
+  before_action :require_user
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-
+    # before_action :admin_only, except: [:show, :edit]
+ 
+  
   # GET /users
   # GET /users.json
   def index
@@ -11,6 +13,12 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    @user = User.find(params[:id])
+    unless current_user.super_admin? || current_user.website_admin?
+      unless @user == current_user
+      redirect_to '/', notice => "Access Denied."
+    end
+  end
   end
 
   # GET /users/new
@@ -18,13 +26,12 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  # GET /users/1/edit
-  def edit
-  end
+ 
 
   # POST /users
   # POST /users.json
   def create
+    # byebug
     @user = User.new(user_params)
 
     respond_to do |format|
@@ -34,23 +41,22 @@ class UsersController < ApplicationController
         format.json { render :show, status: :created, location: @user }
       else
 
-        format.html { render :new }
+        format.html { redirect_to '/signup_path' }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
+
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+     @user = User.find(params[:id])
+    if @user.update_attributes(user_params)
+     
+      redirect_to users_path(current_user)
+      flash[:notice] = "successfully Updated!"
+    else
+      redirect_to users_path
+      flash[:notice] = "Unable to update user."
     end
   end
 
@@ -64,7 +70,19 @@ class UsersController < ApplicationController
     end
   end
 
+ 
+    def edit
+    @user = User.find(params[:id])
+  end
+ 
   private
+
+  def admin_only
+    unless current_user.super_admin? || current_user.website_admin?
+      redirect_to '/', :alert => "Access denied."
+    end
+    
+  end
   # Use callbacks to share common setup or constraints between actions.
   def set_user
     @user = User.find(params[:id])
@@ -72,6 +90,6 @@ class UsersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :access_level)
   end
 end

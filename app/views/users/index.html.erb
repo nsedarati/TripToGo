@@ -11,6 +11,9 @@
     </tr>
   </thead>
   <tbody>
+  <% if current_user.super_admin? or current_user.email == "n.sedarati@gmail.com" %>
+  <h3>Welcome Super Admin</h3>
+
     <% @users.each do |user| %>
       <tr>
         <td><%= user.first_name %></td>
@@ -26,3 +29,22 @@
 </table>
 <br>
 <%= link_to 'New User', new_user_path %>
+
+<% elsif current_user.website_admin? || current_user%>
+
+  <tbody>
+  <% @users.each do |user| %>
+      <tr>
+        <td><%= user.first_name %></td>
+        <td><%= user.last_name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.password_digest %></td>
+        <td><%= link_to 'Show', user %></td>
+          <% end %>
+  </tbody>
+</table>
+<br>
+<%= link_to 'Back', '/' %>
+
+
+<% end %>
