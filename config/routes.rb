@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'hotels/index'
+
+  get 'hotels/show'
+
   resources :users
   #resources :sessions, only: [:create, :new]
   resources :password_resets, only: [:new, :create, :edit, :update]
