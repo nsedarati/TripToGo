@@ -50,11 +50,12 @@ class UsersController < ApplicationController
 
   def update
      @user = User.find(params[:id])
-    if @user.update_attributes(user_params)
-     
+     @user.update(user_params)
+     if @user.save
       redirect_to users_path(current_user)
       flash[:notice] = "successfully Updated!"
     else
+
       redirect_to users_path
       flash[:notice] = "Unable to update user."
     end
@@ -90,6 +91,6 @@ class UsersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :access_level)
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :access_level, :avatar)
   end
 end

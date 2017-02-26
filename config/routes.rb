@@ -1,10 +1,9 @@
 Rails.application.routes.draw do
 
-  get 'hotels/index'
-
-  get 'hotels/show'
-
+  
+  
   resources :users
+  resources :hotels
   #resources :sessions, only: [:create, :new]
   resources :password_resets, only: [:new, :create, :edit, :update]
   # The priority is based upon order of creation: first created -> highest priority.
