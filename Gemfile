@@ -34,6 +34,7 @@ gem 'unirest'
  gem "paperclip", "~> 4.2.1"
  gem 'aws-sdk', '~> 2.3'
  gem 'toastr-rails'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

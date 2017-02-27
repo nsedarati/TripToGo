@@ -31,12 +31,16 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    # byebug
+     # byebug
     @user = User.new(user_params)
 
     respond_to do |format|
       if @user.save
         session[:user_id] = @user.id
+         # Deliver the signup email
+      Notifier.welcome_email(@user).deliver
+      redirect_to(@user, :notice => 'User created')
+      
         format.html { redirect_to '/', notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
