@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   has_many :authentications, :dependent => :destroy
   has_many :comments, :dependent => :destroy
   has_many :searches
+  has_many :hotels
 
   has_secure_password
   validates :email, presence: true, uniqueness: true,
