@@ -1,6 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-	default_url_options[:host] = "localhost:3000"
-  default from: "http://www.TripToGo.com"
-  layout 'mailer'
+	 default from: "sedaratiniloufar@gmail.com"
+     layout 'mailer'
 
 end

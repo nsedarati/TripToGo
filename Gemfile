@@ -31,6 +31,10 @@ gem 'unirest'
  gem 'bootstrap-sass', '~> 3.3.6'
  gem 'sass-rails', '>= 3.2'
  gem 'faker'
+ gem "paperclip", "~> 4.2.1"
+ gem 'aws-sdk', '~> 2.3'
+ gem 'toastr-rails'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

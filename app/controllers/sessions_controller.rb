@@ -28,7 +28,7 @@ class SessionsController < ApplicationController
     user = User.find_by_email(params[:email])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      flash[:success] = "Thanks for logging in!"
+      flash[:notice] = "Thanks for logging in!"
       redirect_to '/'
     else
       flash.now[:error] = "Authenticating Problem."
@@ -38,6 +38,7 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
+    flash[:notice] = "Successfully log out!"
     redirect_to '/login'
   end
 end
