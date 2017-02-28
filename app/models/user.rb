@@ -1,14 +1,4 @@
 class User < ActiveRecord::Base
-   has_attached_file :avatar,              
-     styles: { 
-       large: "600x600",
-       medium: "300x300>",
-       thumb: "100x100#>" 
-     }
-       # default_url: "/images/:style/missing.png"
-
-  validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
-   
   # you can also explicitly define enum as:  enum access_level: [:user => 0, :website_admin => 1, :super_admin => 2}
   enum access_level: [:user, :website_admin, :super_admin]
   # after_initialize :set_default_access_level, :if => :new_record?

@@ -26,3 +26,44 @@ Things you may want to cover:
 
 Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
+
+
+
+		<span>
+			<i>Upload Photos</i>
+			<%= file_field_tag "images[]", type: :file, multiple: true %>
+		</span>
+
+
+
+
+
+  def create
+  	@hotel = current_user.hotels.build(hotel_params)
+  	if @hotel.save
+      if params[:images]
+        params[:images].each do |image| 
+          @hotel.photos.create(image: image)
+        end
+      end
+      
+      @photos = @hotel.photos
+  		redirect_to edit_hotel_path(@hotel) , notice: "Yayyyyy, Saved! "
+  	else
+  		render :new
+  	end
+  end
+
+  def update
+  	if @hotel.update(hotel_params)
+      if params[:images]
+        params[:images].each do |image| 
+          @hotel.photos.create(image: image)
+        end
+      end
+      redirect_to edit_hotel_path(@hotel) , notice: "Yayyyyy, Updated! "
+  		
+  	else
+  		render :edit
+  end
+end

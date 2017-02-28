@@ -37,9 +37,8 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         session[:user_id] = @user.id
-         # Deliver the signup email
-      Notifier.welcome_email(@user).deliver
-      redirect_to(@user, :notice => 'User created')
+    
+      redirect_to(@user, notice: 'User created')
       
         format.html { redirect_to '/', notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
@@ -95,6 +94,6 @@ class UsersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :access_level, :avatar)
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :access_level, :image)
   end
 end
