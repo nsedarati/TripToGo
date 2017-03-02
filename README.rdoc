@@ -38,32 +38,27 @@ Please feel free to use a different markup language if you do not plan to run
 
 
 
-  def create
-  	@hotel = current_user.hotels.build(hotel_params)
-  	if @hotel.save
-      if params[:images]
-        params[:images].each do |image| 
-          @hotel.photos.create(image: image)
-        end
-      end
-      
-      @photos = @hotel.photos
-  		redirect_to edit_hotel_path(@hotel) , notice: "Yayyyyy, Saved! "
-  	else
-  		render :new
-  	end
-  end
+    #Development
+ config.paperclip_defaults = {
+    :storage => :s3,
+    :s3_credentials => {
+      :bucket => 'triptogo',
+      :s3_credentials => "#{Rails.root}/config/aws.yml",
+    }
+  }
 
-  def update
-  	if @hotel.update(hotel_params)
-      if params[:images]
-        params[:images].each do |image| 
-          @hotel.photos.create(image: image)
-        end
-      end
-      redirect_to edit_hotel_path(@hotel) , notice: "Yayyyyy, Updated! "
-  		
-  	else
-  		render :edit
-  end
-end
+  #Production:
+config.paperclip_defaults = {
+    :storage => :s3,
+    :s3_credentials => {
+      :bucket => 'triptogo', 
+      :access_key_id => ENV['AWS_ACCESS_KEY'],
+      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+    }
+  }
+
+  #Show the first hotel photo but I replaced with carousel: 
+  <div class="col-md-12">
+        <%= image_tag @photos[0].image.url(), class: "img-responsive" if @photos.length > 0 %>
+      </div>
+    </div>

@@ -4,7 +4,7 @@
 	</div>
 	<div class="panel-body">
 		<div class="container">
-		
+
 			<%= form_for @hotel, html: {multipart: true} do |f| %>
 
 			<div class="row">
@@ -37,19 +37,19 @@
 						</div></br></br>
 
 						<div class="row">
-							
 								<label>Nightly Price</label>
 								<%= f.text_field :price %>
-						
 						</div></br>
 
 						<div class="row">
 							<div class="col-md-4">
 								<div class="form-group">
-								<span>
-								<i class="fa fa-cloud-upload fa-lg"></i> Upload Photos 
-								<%= f.file_field ":images[]", type: :file, multiple: true %>
+
+								<span class="btn btn-default btn-file">
+									<i>Upload Photos</i>
+							<%= file_field_tag "images[]", type: :file, multiple: true %>
 								</span>
+
 								</div>
 							</div>	
 						</div>

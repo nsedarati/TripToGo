@@ -26,15 +26,20 @@ end
 
   def create
   	@hotel = current_user.hotels.build(hotel_params)
+    
   	if @hotel.save
+
       if params[:images]
+          # byebug
         params[:images].each do |image| 
+          # byebug
           @hotel.photos.create(image: image)
         end
+
       end
-      
-      @photos = @hotel.photos
-  		redirect_to edit_hotel_path(@hotel) , notice: "Yayyyyy, Saved! "
+         @photos = @hotel.photos
+      redirect_to edit_hotel_path(@hotel) , notice: "Yayyyyy, Saved! "
+     
   	else
   		render :new
   	end
@@ -44,6 +49,7 @@ end
   	if @hotel.update(hotel_params)
       if params[:images]
         params[:images].each do |image| 
+          # byebug
           @hotel.photos.create(image: image)
         end
       end

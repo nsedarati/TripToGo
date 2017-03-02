@@ -32,8 +32,8 @@ gem 'unirest'
  gem 'sass-rails', '>= 3.2'
  gem 'faker'
  gem "paperclip", "~> 4.2.1"
- gem 'aws-sdk', '~> 2.3'
  gem 'toastr-rails'
+ gem 'geocoder'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
