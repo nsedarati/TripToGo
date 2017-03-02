@@ -26,3 +26,39 @@ Things you may want to cover:
 
 Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
+
+
+
+		<span>
+			<i>Upload Photos</i>
+			<%= file_field_tag "images[]", type: :file, multiple: true %>
+		</span>
+
+
+
+
+
+    #Development
+ config.paperclip_defaults = {
+    :storage => :s3,
+    :s3_credentials => {
+      :bucket => 'triptogo',
+      :s3_credentials => "#{Rails.root}/config/aws.yml",
+    }
+  }
+
+  #Production:
+config.paperclip_defaults = {
+    :storage => :s3,
+    :s3_credentials => {
+      :bucket => 'triptogo', 
+      :access_key_id => ENV['AWS_ACCESS_KEY'],
+      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+    }
+  }
+
+  #Show the first hotel photo but I replaced with carousel: 
+  <div class="col-md-12">
+        <%= image_tag @photos[0].image.url(), class: "img-responsive" if @photos.length > 0 %>
+      </div>
+    </div>
